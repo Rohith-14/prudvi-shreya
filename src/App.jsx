@@ -452,6 +452,12 @@ END:VCALENDAR`;
             <button className="save-date" onClick={handleSaveDate}>Save the Date</button>
           </div>
         </div>
+        <div 
+        className="scroll-hint-arrow" 
+        // onClick={() => document.getElementById('gallery').scrollIntoView({behavior: 'smooth'})}
+        >
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M7 10l5 5 5-5" stroke="#e03f17" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+        </div>
       </section>
 
       {/* Gallery Section */}
