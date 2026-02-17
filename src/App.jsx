@@ -118,7 +118,7 @@ function App() {
     {
       title: 'Sangeeth',
       date: 'Feb 20, 2026',
-      time: 'Evening (TBD)',
+      time: '7:00 PM onwards',
       attire: 'Shimmer & Shine',
       location: 'SNC Convention, Attapur',
       map: 'https://maps.app.goo.gl/DoMJZx2CJkyaWQdi6',
@@ -126,23 +126,15 @@ function App() {
     {
       title: 'Haldi',
       date: 'Feb 22, 2026',
-      time: 'Morning (TBD)',
+      time: '10:00 AM onwards',
       attire: 'Bright & Bold',
       location: 'Ayana Resorts, Aziz Nagar',
       map: 'https://maps.app.goo.gl/Rb7JKS2t4LBtyZqYA',
     },
     {
-      title: 'Pelli Koduku',
-      date: 'Feb 25, 2026',
-      time: '5:00 PM onwards',
-      attire: 'Family Ceremony',
-      location: 'Aditya Empress Park, Villa No. 7',
-      map: 'https://maps.app.goo.gl/9mBR1WREi1Qmuvp37',
-    },
-    {
       title: 'Wedding',
       date: 'Feb 26, 2026',
-      time: 'Muhurtham: 11:38 AM',
+      time: 'Pelli Muhurtham: 11:38 AM',
       attire: 'Traditional',
       location: 'The Address Convention, Narsingi',
       map: 'https://maps.app.goo.gl/Gc94adgCjkjkFex9A',
@@ -152,13 +144,13 @@ function App() {
       date: 'Feb 27, 2026',
       time: '10:00 AM onwards',
       attire: 'Traditional',
-      location: 'Aditya Empress Park, Villa No. 7',
+      location: 'Aditya Empress Park, Villa No. 8',
       map: 'https://maps.app.goo.gl/9mBR1WREi1Qmuvp37',
     },
     {
       title: 'Reception',
       date: 'Mar 1, 2026',
-      time: '7:30 PM onwards',
+      time: '7:00 PM onwards',
       attire: 'Festive / Evening',
       location: 'JD Convention, Shamshabad',
       map: 'https://maps.app.goo.gl/wRX1UQ6EEZ1Cx78y9',
@@ -166,16 +158,80 @@ function App() {
   ];
 
   const handleSaveDate = () => {
-    const eventDetails = {
-      text: 'Prudvi & Shreya Wedding',
-      dates: '20260226T060800Z/20260226T080800Z', // 11:38 AM - 1:38 PM IST in UTC
-      details: 'Join us to celebrate Prudvi & Shreya\'s wedding ceremony. Muhurtham at 11:38 AM IST.',
-      location: 'The Address Convention, Narsingi, Hyderabad, India',
-    };
-    
-    const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventDetails.text)}&dates=${eventDetails.dates}&details=${encodeURIComponent(eventDetails.details)}&location=${encodeURIComponent(eventDetails.location)}`;
-    
-    window.open(googleCalendarUrl, '_blank');
+    // Create .ics file with all wedding events
+    const icsContent = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Prudvi & Shreya Wedding//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Prudvi & Shreya Wedding
+X-WR-TIMEZONE:Asia/Kolkata
+
+BEGIN:VEVENT
+UID:sangeeth-prudvi-shreya@wedding.com
+DTSTAMP:20260217T000000Z
+DTSTART:20260220T133000Z
+DTEND:20260220T163000Z
+SUMMARY:Prudvi & Shreya - Sangeeth
+DESCRIPTION:Join us for the Sangeeth ceremony!\\nDress Code: Shimmer & Shine
+LOCATION:SNC Convention, Attapur, Hyderabad, India
+STATUS:CONFIRMED
+END:VEVENT
+
+BEGIN:VEVENT
+UID:haldi-prudvi-shreya@wedding.com
+DTSTAMP:20260217T000000Z
+DTSTART:20260222T043000Z
+DTEND:20260222T073000Z
+SUMMARY:Prudvi & Shreya - Haldi
+DESCRIPTION:Join us for the Haldi ceremony!\\nDress Code: Bright & Bold
+LOCATION:Ayana Resorts, Aziz Nagar, Hyderabad, India
+STATUS:CONFIRMED
+END:VEVENT
+
+BEGIN:VEVENT
+UID:wedding-prudvi-shreya@wedding.com
+DTSTAMP:20260217T000000Z
+DTSTART:20260226T013000Z
+DTEND:20260226T083000Z
+SUMMARY:Prudvi & Shreya - Wedding
+DESCRIPTION:Join us to celebrate Prudvi & Shreya's wedding ceremony.\\nPelli Muhurtham at 11:38 AM IST\\nDress Code: Traditional
+LOCATION:The Address Convention, Narsingi, Hyderabad, India
+STATUS:CONFIRMED
+END:VEVENT
+
+BEGIN:VEVENT
+UID:vratham-prudvi-shreya@wedding.com
+DTSTAMP:20260217T000000Z
+DTSTART:20260227T043000Z
+DTEND:20260227T073000Z
+SUMMARY:Prudvi & Shreya - Vratham
+DESCRIPTION:Join us for the Vratham ceremony!\\nDress Code: Traditional
+LOCATION:Aditya Empress Park, Villa No. 8, Hyderabad, India
+STATUS:CONFIRMED
+END:VEVENT
+
+BEGIN:VEVENT
+UID:reception-prudvi-shreya@wedding.com
+DTSTAMP:20260217T000000Z
+DTSTART:20260301T133000Z
+DTEND:20260301T163000Z
+SUMMARY:Prudvi & Shreya - Reception
+DESCRIPTION:Join us for the Reception!\\nDress Code: Festive / Evening
+LOCATION:JD Convention, Shamshabad, Hyderabad, India
+STATUS:CONFIRMED
+END:VEVENT
+
+END:VCALENDAR`;
+
+    // Create blob and download
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = 'Prudvi-Shreya-Wedding-Events.ics';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const openLightbox = (index) => setLightboxIndex(index);
@@ -232,6 +288,28 @@ function App() {
       setIsMuted(!isMuted);
     }
   };
+
+  // Intersection Observer for scroll animations
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    const animatedElements = document.querySelectorAll('.fade-in-up');
+    animatedElements.forEach(el => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, [showContent]);
 
   const handleEnvelopeClick = () => {
     if (!envelopeOpened) {
@@ -302,7 +380,7 @@ function App() {
         
         <div className="overlay fade-in">
           <h1 className="hero-title slide-in-top">Prudvi &amp; Shreya</h1>
-          <h2 className="hero-subtitle slide-in-top" style={{animationDelay: '0.2s'}}>joyfully invite you to celebrate their wedding</h2>
+          <h2 className="hero-subtitle slide-in-top" style={{animationDelay: '0.2s'}}><span className="wedding-highlight">joyfully invite you to celebrate their wedding.</span></h2>
           <div className="countdown-container slide-in-top" style={{animationDelay: '0.4s'}}>
             <span className="countdown-label">Getting hitched in...</span>
             {timeLeft.isOver ? (
@@ -342,9 +420,29 @@ function App() {
       )}
           </div>
           <div className="event-details slide-in-top" style={{animationDelay: '0.6s'}}>
-            <p><strong>Date:</strong> February 26, 2026</p>
-            <p><strong>Time:</strong> 11:38 AM IST</p>
-            <p><strong>Location:</strong> Hyderabad, India</p>
+            <p><strong>Date:</strong> <span className="detail-value">February 26, 2026</span></p>
+            <p><strong>Muhurtham:</strong> <span className="detail-value">11:38 AM IST</span></p>
+            <p><strong>Location:</strong> <span className="detail-value">Hyderabad, India</span></p>
+          </div>
+          <div className="live-links-row slide-in-top" style={{animationDelay: '0.7s'}}>
+            <a 
+              href="https://youtube.com/live/l0B7TMElpNo?feature=share" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="live-link"
+            >
+              <span className="live-indicator">🔴 LIVE</span>
+              Sangeeth Stream 🎶
+            </a>
+            <a 
+              href="https://youtube.com/live/cmou6NKA9FI?feature=share" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="live-link"
+            >
+              <span className="live-indicator">🔴 LIVE</span>
+              Wedding Stream 🎉
+            </a>
           </div>
           <div className="cta-row slide-in-top" style={{animationDelay: '0.8s'}}>
             <button className="scroll-down" onClick={() => document.getElementById('gallery').scrollIntoView({behavior: 'smooth'})}>View Gallery ↓</button>
@@ -359,7 +457,12 @@ function App() {
         <p className="section-subtitle">Captured moments of our beautiful story</p>
         <div className="gallery-grid">
           {photos.map((photo, index) => (
-            <button key={photo.id} className="gallery-item" onClick={() => openLightbox(index)}>
+            <button 
+              key={photo.id} 
+              className="gallery-item fade-in-up" 
+              style={{animationDelay: `${index * 0.15}s`}}
+              onClick={() => openLightbox(index)}
+            >
               <img src={photo.src} alt={photo.alt} />
             </button>
           ))}
@@ -371,8 +474,12 @@ function App() {
         <h2 className="events-section-title">Wedding Events</h2>
         <p className="section-subtitle">Celebrate with us across every special moment</p>
         <div className="events-grid">
-          {events.map((event) => (
-            <div key={event.title} className="event-card">
+          {events.map((event, index) => (
+            <div 
+              key={event.title} 
+              className="event-card fade-in-up" 
+              style={{animationDelay: `${index * 0.1}s`}}
+            >
               <div className="event-top">
                 <h3>{event.title}</h3>
                 <p className="event-date">{event.date}</p>
