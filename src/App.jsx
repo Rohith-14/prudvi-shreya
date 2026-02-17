@@ -446,6 +446,9 @@ END:VCALENDAR`;
           </div>
           <div className="cta-row slide-in-top" style={{animationDelay: '0.8s'}}>
             <button className="scroll-down" onClick={() => document.getElementById('gallery').scrollIntoView({behavior: 'smooth'})}>View Gallery ↓</button>
+            <button className="scroll-down" onClick={() => document.getElementById('events').scrollIntoView({behavior: 'smooth'})}>Event Details ↓</button>
+          </div>
+          <div className="save-date-row slide-in-top" style={{animationDelay: '0.85s'}}>
             <button className="save-date" onClick={handleSaveDate}>Save the Date</button>
           </div>
         </div>

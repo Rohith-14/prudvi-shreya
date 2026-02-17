@@ -501,6 +501,14 @@ html {
   box-shadow: 0 5px 18px rgba(197, 76, 44, 0.5);
   background: linear-gradient(135deg, #ffb347 0%, #ff9966 100%);
 }
+/* 
+.live-link:focus {
+  outline: none;
+}
+
+.live-link:active {
+  transform: translateY(0);
+} */
 
 .live-indicator {
   font-size: 0.75rem;
@@ -541,6 +549,12 @@ html {
   gap: 0.8rem;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+.save-date-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.8rem;
 }
 
 .save-date {
@@ -1291,11 +1305,21 @@ html {
   }
 
   .cta-row {
-    flex-direction: column;
+    flex-direction: row;
     gap: 0.6rem;
   }
 
-  .scroll-down, .save-date {
+  .save-date-row {
+    margin-top: 0.6rem;
+  }
+
+  .scroll-down {
+    flex: 1;
+    padding: 0.6rem 1rem;
+    font-size: 0.95rem;
+  }
+
+  .save-date {
     width: 100%;
     padding: 0.6rem 1.2rem;
     font-size: 0.95rem;
@@ -1681,7 +1705,12 @@ html {
     font-size: 0.9rem;
   }
 
-  .scroll-down, .save-date {
+  .scroll-down {
+    padding: 0.5rem 0.9rem;
+    font-size: 0.85rem;
+  }
+
+  .save-date {
     padding: 0.5rem 1rem;
     font-size: 0.85rem;
   }
